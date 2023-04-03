@@ -11,8 +11,8 @@ int test(); // delete
 #include <fcntl.h>
 #include <unistd.h>
 
-#include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/acl.h>
 #include <sys/xattr.h>
@@ -21,11 +21,12 @@ int test(); // delete
 
 int mx_check_dir( char* dirname, char*** dirarr, char*** filearr, int type ); //
 char* mx_get_acl(char *filename, char **pararr); // 
+
 int mx_check_name(char*** namearr, char** pararr); // +?
 char* mx_get_date( int unixseconds ); // 
 int mx_get_par_arg(char** argv, char*** pararr, char*** argarr); // 
 
-int mx_print_uls(char **pararr, char** namearr, int type ); // 
+int mx_print_uls( char* path, char **pararr, char** namearr, int type ); // 
 
 int mx_print_multicolumn(char** printarr, char** pararr); 
 

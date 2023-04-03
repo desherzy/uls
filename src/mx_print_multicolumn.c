@@ -3,7 +3,7 @@
 
 int mx_print_multicolumn(char** printarr, char** pararr) {
 
-mx_printstr("\n print  mco  \n");
+//mx_printstr("\n print  mco  \n");
     // space between cols 
     char* space = " ";
     int space_len = 2; // without \0 
@@ -13,10 +13,10 @@ mx_printstr("\n print  mco  \n");
         ioctl(0, TIOCGWINSZ, &ws);
         widht = ws.ws_col;
     }
-mx_printstr(" 045-1 ");
+/*mx_printstr(" 045-1 ");
 mx_printstr("\n widht         ");
 mx_printint(widht);
-if (printarr == NULL) mx_printstr(" print null  ");
+if (printarr == NULL) mx_printstr(" print null  ");*/
 
     int print_cnt = 0;
     for ( ; printarr != NULL && printarr[print_cnt] != NULL; ) { 
@@ -31,9 +31,9 @@ if (printarr == NULL) mx_printstr(" print null  ");
     //         intarr[i] = mx_strlen(printarr[i]);
     //     }
     // }
-mx_printstr(" 045-2 ");
+/*mx_printstr(" 045-2 ");
 mx_printstr("\n print_cnt         ");
-mx_printint(print_cnt);
+mx_printint(print_cnt);*/
 
     int rows = 1; // rows count
     { // find count of rows 
@@ -45,21 +45,21 @@ mx_printint(print_cnt);
             for ( ; cols_i < print_cnt ; ) { // foreach col // find all rows lens
 
                 int col_len = 0;
-mx_printstr(" 045-3 ");
+//mx_printstr(" 045-3 ");
                 for ( int row = 0; row < rows && (cols_i*rows + row) < print_cnt ; row++) { // find max col len 
 
                     /*for (int stri = 0; printarr[ cols_i  ] != NULL; stri++) {
                         
                     }*/ //
-mx_printstr(" 045-31 ");
+//mx_printstr(" 045-31 ");
                     if ( mx_strlen( printarr[ (cols_i*rows + row) ] ) > col_len ) { // (col * 4) + (row)
-mx_printstr(" true ");
+/*mx_printstr(" true ");
 mx_printstr(printarr[ (cols_i*rows + row) ]);
-mx_printstr("\n");
+mx_printstr("\n");*/
                         col_len = mx_strlen( printarr[ (cols_i*rows + row) ] );
                     }
                 }
-mx_printstr(" 045-4 ");
+/*mx_printstr(" 045-4 ");*/
 
                 row_len += col_len;
                 if ( cols_i+1 < print_cnt )
@@ -75,10 +75,10 @@ mx_printstr(" 045-4 ");
             }
         }
     }
-mx_printstr(" 045-5 ");
+/*mx_printstr(" 045-5 ");
 mx_printstr("\n rows         ");
 mx_printint(rows);
-mx_printstr("\n");
+mx_printstr("\n");*/
     { // print 
         int rows_i = 0;
         for ( ; rows_i < rows; rows_i++) { // foreach row

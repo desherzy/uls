@@ -1,4 +1,4 @@
-CLANG = clang -std=c11 -Wall -Wextra -Werror -Wpedantic
+CLANG = clang -std=gnu11 -Wall -Wextra -Werror -Wpedantic
 SF = src/*.c 
 OD = obj
 EFN = uls

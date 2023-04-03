@@ -2,12 +2,14 @@
 #include "../inc/uls.h"
 
 int main(int argc, char const *argv[]) {
-    test();
+    //test();
 
     // parameters array
     char **pararr = NULL; 
     // file & dir array
     char **argarr = NULL; 
+
+mx_print_strarr( (char**)argv," | ");
 
     if (argc > 1) { 
         int error1 = mx_get_par_arg( (char**)argv, &pararr, &argarr );
@@ -37,12 +39,12 @@ write(1, "\n03\n", 5);
         }
     } // check if there any arg && get sorted par & arg 
     //return 1;
-    if ( argarr == NULL ||true) { // if argarr != NULL
+    if ( argarr == NULL ) { // if argarr != NULL
 
 write(1, "\n04\n", 5);
-mx_printstr( "argc: " );
-mx_printint( argc );
-mx_printstr( "\n" );
+//mx_printstr( "argc: " );
+//mx_printint( argc );
+//mx_printstr( "\n" );
 
         // dirs names array
         //char ***printarr = NULL;
@@ -84,7 +86,7 @@ for (int i = 0; dirarr[i] != NULL; i++) {
 
             //for (int i = 0; dirarr[i] != NULL; i++) {
 
-                mx_print_uls( pararr, dirarr, 1 );
+                mx_print_uls( "", pararr, dirarr, 1 );
             //}
             /*for (int i = 0; filearr[i] != NULL; i++) {
 
@@ -98,11 +100,10 @@ write(1, " 047", 5);
         }
 write(1, " 048", 5);
         { // clear
+            if (dirarr != NULL) {
 
-
-            pararr = NULL; 
-            dirarr = NULL; 
-            argv = NULL;
+                mx_del_strarr(&dirarr);
+            }
         }
 write(1, "\n05\n", 5);
     }
@@ -110,17 +111,21 @@ write(1, "\n05\n", 5);
 
 write(1, "\n06\n", 5);
 
+mx_print_strarr( argarr," | ");
+
         // dirs names array
         char **dirarr = NULL;
         // files names array
         char **filearr = NULL;
 
-        if ( mx_sort_arg( argarr, pararr, &dirarr, &filearr ) ) {
+        if ( mx_sort_arg( argarr, pararr, &dirarr, &filearr ) == -1 ) {
 
-            
+            return -1;
         }
+        //return 100;
         if ( filearr != NULL ) {
 
+write(1, "\n06-f\n", 7); 
             /*for (int i = 0; filearr[i] != NULL; i++) {
 
                 mx_check_l( filearr[i], pararr, printarr );
@@ -132,10 +137,12 @@ write(1, "\n06\n", 5);
 
 
             }*/
-            mx_print_uls( pararr, filearr, 1 );
+            mx_print_uls( "", pararr, filearr, 1 );
         }
         if ( dirarr != NULL ) {
 
+write(1, "\n06-d\n", 7); 
+mx_print_strarr( dirarr," | ");
             for (int i = 0; dirarr[i] != NULL; i++) {
 
                 // dirs names array
@@ -143,34 +150,33 @@ write(1, "\n06\n", 5);
 
                 if ( mx_check_dir( dirarr[i], &dirarr2, NULL, 1 ) != -1) { 
 
-                    mx_check_name( &dirarr, pararr);
+
+                    mx_check_name( &dirarr2, pararr);
 
                     mx_printstr( dirarr[i] );
                     mx_printstr( ":\n" );
                     //for (int i = 0; dirarr2[i] != NULL; i++) {
 
-                        mx_print_uls( pararr, dirarr2, 1 );
+                        mx_print_uls( dirarr[i], pararr, dirarr2, 1 );
                     //} // foreach dirarr
                 }
-                else {
-
-
-                }
                 { // clear
+                    if (dirarr2 != NULL) {
 
-
-                    pararr = NULL; 
-                    dirarr = NULL; 
-                    argv = NULL;
+                        mx_del_strarr(&dirarr2);
+                    }
                 }
             } // foreach dirarr
-            { // clear 
-
-                
-            }
         }
         {
+            if (dirarr != NULL) {
 
+                mx_del_strarr(&dirarr);
+            }
+            if (filearr != NULL) {
+
+                mx_del_strarr(&filearr);
+            }
         }
 write(1, "\n07\n", 5);
     }

@@ -45,16 +45,18 @@ int test()
         mx_printint( stat1.st_mode );
         mx_printstr(" file block: ");
         mx_printint( stat1.st_blocks );
-        mx_printstr(" file unix mtime: ");
+
+        mx_printstr("\n   file unix mtime:   ");
         mx_printint( stat1.st_mtime );
-        mx_printstr(" file time: ");
-        mx_printint( time(&stat1.st_mtime) );
-        mx_printstr( "" ); // mx_get_date
+        //mx_printstr("   file time:   ");
+        //mx_printint( time(&stat1.st_mtime) );
+        mx_printstr( "   file date:    " ); // mx_get_date
+        mx_printstr( mx_get_date( stat1.st_mtime ) ); // mx_get_date
+        mx_printstr( "   \n    " ); // mx_get_date
 
         mx_printstr(" \n ");
+        //exit(0);
         //mx_printint( x );
-
-        
     } // find uid 
     if ( true ) { // pwu 
 /*struct passwd {
@@ -100,22 +102,29 @@ int test()
         //mx_printint( gid );
 
         acl_t acl;
-
-        acl = acl_get_file( "file4.txt", ACL_TYPE_DEFAULT );
+        acl = acl_get_file( "11file", ACL_TYPE_ACCESS );
 
         //mx_printstr( " group: " );
         ssize_t sizea = 0;
-
         char *acltext = acl_to_text( acl, &sizea );
 
         if (acltext == NULL)
             mx_printstr( " ACL NULL " );
+        else {
+            mx_printstr( acltext );
+        mx_printstr( " " );
+        mx_printint( sizea );
+        mx_printstr( " " );
+        }
         
         //mx_printstr( acltext );
-        mx_printstr( " " );
+        /*mx_printstr( "\n               ======== acl" );
+        mx_printstr( acl );
+        mx_printstr( " " );*/
         //mx_printint( sizea );
+        
 
-        mx_printstr("\n acl_get_file2: ");
+        /*mx_printstr("\n acl_get_file2: ");
 
         acl = acl_get_file( "file4.txt", ACL_TYPE_ACCESS );
         //mx_printstr( " group: " );
@@ -125,7 +134,14 @@ int test()
         mx_printstr( acltext );
         mx_printstr( " " );
         mx_printint( sizea );
-        mx_printstr( " " );
+        mx_printstr( " " );*/
+
+        /*mx_printstr( "\n               ======== acl" );
+        mx_printint( acl );
+        mx_printstr( " " );*/
+
+
+        acl_free( (void*)acl );
 
         //mx_printint( acl );
 
@@ -188,6 +204,7 @@ int test()
         
         mx_printstr(" \n ");
     }
+
     return 0;
 }
 

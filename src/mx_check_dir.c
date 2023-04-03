@@ -55,8 +55,8 @@ int mx_check_dir( char* dirname, char*** dirarr, char*** filearr, int type ) {
             (*filearr) = (char**)malloc( sizeof(char*) * (file_cnt + 1) );
             (*filearr)[file_cnt] = NULL;
         }
-mx_printstr(" dirc ");
-mx_printint(dir_cnt);
+//mx_printstr(" dirc ");
+//mx_printint(dir_cnt);
 
         dir = opendir( dirname );
         dirnt = readdir( dir );
@@ -83,9 +83,9 @@ mx_printint(dir_cnt);
 
             dirnt = readdir( dir );
         }
-mx_printstr(" diri ");
-mx_printint(dir_i);
-mx_printstr("\n");
+//mx_printstr(" diri ");
+//mx_printint(dir_i);
+//mx_printstr("\n");
         closedir( dir );
     }
     else { // dir not opened 
