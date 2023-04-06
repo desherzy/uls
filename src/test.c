@@ -194,7 +194,7 @@ int test()
         int sz = 10;
         char* list = mx_strnew(sz);
         
-        sz = listxattr("file4.txt", list, sz);
+        sz = listxattr("file4.txt", list, sz, XATTR_NOFOLLOW);
 
         mx_printstr(" sz: ");
         mx_printint(sz);

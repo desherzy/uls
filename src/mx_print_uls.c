@@ -1,12 +1,12 @@
 #include "../libmx/inc/libmx.h"
 #include "../inc/uls.h"
 
-int mx_print_uls( char* path, char **pararr, char** namearr, int type ) {
+int mx_print_uls( char* path, char **pararr, char** namearr /*int type*/ ) {
 
     //pararr = NULL;
     //namearr = NULL;
     //dirname = NULL;
-    type = 1;
+    //type = 1;
 
 //mx_printstr( "                                 l1   \n" );
     if ( mx_check_par(pararr, 'l') ) {
@@ -19,6 +19,9 @@ int mx_print_uls( char* path, char **pararr, char** namearr, int type ) {
         struct stat stat1;
         { // find total and size col len
             int total = 0;
+
+            if (total == 0) { }
+
             for (int i = 0; namearr[i] != NULL; i++) { // foreach in names
                 {
                     int s = mx_strlen(path);
@@ -127,7 +130,7 @@ mx_printstr( namearr[i] );*/
 
         if (isatty(1) == 1) {
 
-            mx_print_multicolumn(namearr, pararr);
+            //mx_print_multicolumn(namearr, pararr);
         }
         else if (isatty(1) == 0) {
 

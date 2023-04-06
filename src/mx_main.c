@@ -86,7 +86,7 @@ for (int i = 0; dirarr[i] != NULL; i++) {
 
             //for (int i = 0; dirarr[i] != NULL; i++) {
 
-                mx_print_uls( "", pararr, dirarr, 1 );
+                mx_print_uls( "", pararr, dirarr);
             //}
             /*for (int i = 0; filearr[i] != NULL; i++) {
 
@@ -137,7 +137,7 @@ write(1, "\n06-f\n", 7);
 
 
             }*/
-            mx_print_uls( "", pararr, filearr, 1 );
+            mx_print_uls( "", pararr, filearr);
         }
         if ( dirarr != NULL ) {
 
@@ -157,7 +157,7 @@ mx_print_strarr( dirarr," | ");
                     mx_printstr( ":\n" );
                     //for (int i = 0; dirarr2[i] != NULL; i++) {
 
-                        mx_print_uls( dirarr[i], pararr, dirarr2, 1 );
+                        mx_print_uls( dirarr[i], pararr, dirarr2);
                     //} // foreach dirarr
                 }
                 { // clear

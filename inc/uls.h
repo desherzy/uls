@@ -26,7 +26,7 @@ int mx_check_name(char*** namearr, char** pararr); // +?
 char* mx_get_date( int unixseconds ); // 
 int mx_get_par_arg(char** argv, char*** pararr, char*** argarr); // 
 
-int mx_print_uls( char* path, char **pararr, char** namearr, int type ); // 
+int mx_print_uls( char* path, char **pararr, char** namearr); // 
 
 int mx_print_multicolumn(char** printarr, char** pararr); 
 
