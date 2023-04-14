@@ -6,6 +6,41 @@ char *mx_get_date( int unixseconds ) { // 01.01.1970 // mounth day hours:minutes
     //time_t sec;
     //sec = time(NULL);
     int sec = unixseconds; // seconds of current year
+
+    if (true) {
+        const int gmt = 0; 
+        sec += gmt * 60 * 60;
+    }
+    /*{
+        hour += gmt;
+        if (hour > 23) {
+            hour -= 24;
+            day += 1;
+            if (day > days_in_month) {
+                day -= days_in_month;
+                month += 1;
+                bool m = false;
+                switch (month) { // 
+                    case 1: case 3: case 5: case 7: case 8: case 10: case 12: 
+                        days_in_month = 31;
+                        break;
+                    case 2: 
+                        if ((year + 1970) % 4 != 0) 
+                            days_in_month = 28;
+                        else if ((year + 1970) % 4 == 0) 
+                            days_in_month = 29;
+                        break;
+                    case 4: case 6: case 9: case 11: 
+                        days_in_month = 30;
+                        break;
+                }
+                if ( m || month > 12 )  {
+                    m -= 12;
+                    year += 1;
+                }
+            }
+        }
+    }*/
     /*mx_printstr("\n<<<<<< sec : ");
     mx_printint( sec );*/
     int year = 0;
@@ -111,37 +146,6 @@ char *mx_get_date( int unixseconds ) { // 01.01.1970 // mounth day hours:minutes
             break;
         }
     }
-    const int gmt = 2;
-    {
-        hour += gmt;
-        if (hour > 23) {
-            hour -= 24;
-            day += 1;
-            if (day > days_in_month) {
-                day -= days_in_month;
-                month += 1;
-                bool m = false;
-                /*switch (month) { // 
-                    case 1: case 3: case 5: case 7: case 8: case 10: case 12: 
-                        days_in_month = 31;
-                        break;
-                    case 2: 
-                        if ((year + 1970) % 4 != 0) 
-                            days_in_month = 28;
-                        else if ((year + 1970) % 4 == 0) 
-                            days_in_month = 29;
-                        break;
-                    case 4: case 6: case 9: case 11: 
-                        days_in_month = 30;
-                        break;
-                }*/
-                if ( m || month > 12 )  {
-                    m -= 12;
-                    year += 1;
-                }
-            }
-        }
-    }
     int minute = 0;
     for ( ; minute <= 59; minute++ ) {
         
@@ -154,7 +158,7 @@ char *mx_get_date( int unixseconds ) { // 01.01.1970 // mounth day hours:minutes
     }
     char* date = NULL;
     { // create final string
-        date = mx_strnew(11);
+        date = mx_strnew(12);
         int date_i = 0;
         char* monthstr = mx_strnew(3);
         //monthstr[0] = '1';
@@ -216,10 +220,18 @@ mx_printstr("\"   d-6 ");*/
         date[date_i] = ' ';
         date_i++;
         int timediff = time(0) - unixseconds;
-        if ( timediff < 0 )
+/*mx_printstr("||| time now   ");
+mx_printint(time(0));
+mx_printstr("||| unix   ");
+mx_printint(unixseconds);
+mx_printstr("||| diff   ");
+mx_printint(timediff);
+mx_printstr("|||");*/
+        if ( timediff < 0 ) {
             timediff *= -1;
+        }
 //mx_printstr(" d-8 ");
-        if ( timediff > (int)(30.44 * 24 * 60 * 60) ) { //
+        if ( timediff < (int)(30.44 * 24 * 60 * 60) ) { //
             if (mx_strlen(hourstr) == 1) {
                 date[date_i] = '0';
                 date_i++;
@@ -247,8 +259,10 @@ mx_printstr("\"   d-6 ");*/
                 date_i++;
             }
         }
+/*mx_printstr("\n\t\t\t\t\t d-9      ");
+mx_printint(date_i);
+mx_printstr("\n");*/
     }
-//mx_printstr(" d-9 ");
     return date;
 }
 

@@ -3,7 +3,7 @@
 // 
 int mx_sort_strarr(char*** strarr) {
 
-    if (strarr == NULL) {
+    if (strarr == NULL || *strarr == NULL) {
         return -1;
     }
     /*int size = 0;

@@ -58,7 +58,7 @@ mx_printstr("\n        ");*/
         }
 //write(1, " >43-7", 7);
     }
-    if ( !mx_check_par(pararr, ' ') &&false) { // sorting 
+    if (!mx_check_par(pararr, ' ') && true) { // sorting 
 
 /*mx_printstr( " \n==============================\n " );
 for (int i = 0; namearr2[i] != NULL; i++) {
@@ -83,21 +83,22 @@ mx_printstr( "\n ==============================\n " );*/
     else if ( mx_check_par(pararr, ' ') &&false) { // sorting 
         
     }
-write(1, " >43-8", 7);
+//write(1, " >43-8", 7);
 
     // clear namearr
     //mx_del_strarr( &(*namearr) );
 
-write(1, " >43-82", 8);
+//write(1, " >43-82", 8);
 
-mx_printstr(" \n ");
+/*mx_printstr(" \n ");
 mx_print_strarr( (*namearr)," | ");
-mx_print_strarr( namearr2," | ");
+mx_printstr(" \n ---------------- \n ");
+mx_print_strarr( namearr2," | ");*/
 
     //namearr = &namearr2;
     (*namearr) = namearr2;
 
-write(1, "  >43-9\n", 9);
+//write(1, "  >43-9\n", 9);
     return 0;
 }
 

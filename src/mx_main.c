@@ -9,26 +9,30 @@ int main(int argc, char const *argv[]) {
     // file & dir array
     char **argarr = NULL; 
 
-mx_print_strarr( (char**)argv," | ");
+//mx_print_strarr( (char**)argv," | ");
 
     if (argc > 1) { 
         int error1 = mx_get_par_arg( (char**)argv, &pararr, &argarr );
 
 write(1, " 02 ", 5);
-mx_printstr( "\npararr: " );
+/*mx_printstr( "\npararr: " );
 if (pararr == NULL) write(1, " pn ", 5);
+else {
+    for (int i = 0; pararr[i] != NULL; i++) {
+    //write(1, " 021", 5);
+        mx_printstr( pararr[i] );
+        mx_printstr( " | " );
+    }
+}
 if (argarr == NULL) write(1, " an ", 5);
-for (int i = 0; pararr[i] != NULL; i++) {
-//write(1, " 021", 5);
-    mx_printstr( pararr[i] );
-    mx_printstr( " | " );
+else {
+    mx_printstr( "\nargarr: " );
+    for (int i = 0; argarr[i] != NULL; i++) {
+        mx_printstr( argarr[i] );
+        mx_printstr( " | " );
+    }
 }
-mx_printstr( "\nargarr: " );
-for (int i = 0; argarr[i] != NULL; i++) {
-    mx_printstr( argarr[i] );
-    mx_printstr( " | " );
-}
-write(1, "\n03\n", 5);
+write(1, "\n03\n", 5);*/
 
         if ( error1 <= -1 ) {
             
@@ -41,7 +45,7 @@ write(1, "\n03\n", 5);
     //return 1;
     if ( argarr == NULL ) { // if argarr != NULL
 
-write(1, "\n04\n", 5);
+write(1, " 04\n", 5);
 //mx_printstr( "argc: " );
 //mx_printint( argc );
 //mx_printstr( "\n" );
@@ -54,26 +58,27 @@ write(1, "\n04\n", 5);
         // files names array
         //char **filearr = NULL;
 
-write(1, " 041", 5);
+//write(1, " 041", 5);
         if ( mx_check_dir( "./", &dirarr, NULL, 1 ) != -1) { 
 
-if (dirarr == NULL) write(1, " dn ", 5);
+/*if (dirarr == NULL) write(1, " dn ", 5);
 for (int i = 0; dirarr[i] != NULL; i++) {
 //write(1, " 021", 5);
     mx_printstr( dirarr[i] );
     mx_printstr( " | " );
-}
+}*/
 write(1, " 042", 5);
 
             mx_check_name( &dirarr, pararr);
 
-write(1, " 043 \n", 7);
+/*write(1, " 043 \n", 7);
 if (dirarr == NULL) write(1, " dn ", 5);
 for (int i = 0; dirarr[i] != NULL; i++) {
 //write(1, " 021", 5);
     mx_printstr( dirarr[i] );
     mx_printstr( " | " );
 }
+write(1, " 044 \n", 7);*/
             /*for (int i = 0; filearr[i] != NULL; i++) {
 
                 mx_check_l( filearr[i], pararr, printarr );
@@ -86,7 +91,7 @@ for (int i = 0; dirarr[i] != NULL; i++) {
 
             //for (int i = 0; dirarr[i] != NULL; i++) {
 
-                mx_print_uls( "", pararr, dirarr);
+                mx_print_uls( "", pararr, dirarr, 1);
             //}
             /*for (int i = 0; filearr[i] != NULL; i++) {
 
@@ -98,7 +103,7 @@ write(1, " 046", 5);
 write(1, " 047", 5);
 
         }
-write(1, " 048", 5);
+//write(1, " 048", 5);
         { // clear
             if (dirarr != NULL) {
 
@@ -111,7 +116,7 @@ write(1, "\n05\n", 5);
 
 write(1, "\n06\n", 5);
 
-mx_print_strarr( argarr," | ");
+//mx_print_strarr( argarr," | ");
 
         // dirs names array
         char **dirarr = NULL;
@@ -137,12 +142,12 @@ write(1, "\n06-f\n", 7);
 
 
             }*/
-            mx_print_uls( "", pararr, filearr);
+            mx_print_uls("", pararr, filearr, 2);
         }
         if ( dirarr != NULL ) {
 
 write(1, "\n06-d\n", 7); 
-mx_print_strarr( dirarr," | ");
+//mx_print_strarr( dirarr," | ");
             for (int i = 0; dirarr[i] != NULL; i++) {
 
                 // dirs names array
@@ -157,7 +162,7 @@ mx_print_strarr( dirarr," | ");
                     mx_printstr( ":\n" );
                     //for (int i = 0; dirarr2[i] != NULL; i++) {
 
-                        mx_print_uls( dirarr[i], pararr, dirarr2);
+                    mx_print_uls( dirarr[i], pararr, dirarr2, 2);
                     //} // foreach dirarr
                 }
                 { // clear
@@ -178,14 +183,14 @@ mx_print_strarr( dirarr," | ");
                 mx_del_strarr(&filearr);
             }
         }
-write(1, "\n07\n", 5);
+write(1, "\n07", 5);
     }
     { // final clearing 
-write(1, "\n08\n", 5);
+/*write(1, "\n08\n", 5);
 if ( pararr == NULL ) 
 mx_printstr(" pararr-nul1\n");
 if ( argarr == NULL ) 
-mx_printstr(" argarr-nul2\n");
+mx_printstr(" argarr-nul2\n");*/
         /*for (int i2 = 0; i2 < islands_count ; i2++ ) {
             free(varr[i2]);
         }
@@ -204,7 +209,7 @@ mx_printstr(" argarr-nul2\n");
 
             mx_del_strarr(&argarr);
         }
-write(1, "\n09\n", 5);
+write(1, " 09\n", 5);
     }
     return 0;
 }
