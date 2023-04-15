@@ -68,8 +68,9 @@ for (int i = 0; namearr2[i] != NULL; i++) {
 }
 
 mx_printstr( " \n==============================\n " );*/
-
-        mx_sort_strarr(&namearr2);
+        if (namearr2 != NULL)
+            mx_bubble_sort(namearr2, name_cnt);
+        //mx_sort_strarr(&namearr2);
         //mx_sort_strarr(&namearr2);
 
 /*for (int i = 0; namearr2[i] != NULL; i++) {

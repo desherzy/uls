@@ -2,7 +2,7 @@
 
 // delete beffore pushing
 #include <stdio.h>
-int test(); // delete
+//int test(); // delete
 
 #include <pwd.h>
 #include <grp.h>

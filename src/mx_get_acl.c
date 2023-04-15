@@ -55,7 +55,7 @@ char* mx_get_acl(char *filename, char **pararr) {
         //mx_printstr( " <d> " );
                 mode = 2;
             }
-            else if ( S_ISWHT(stat2.st_mode) ) { // S_IFWHT(stat2.st_mode)
+            else if ( S_ISWHT(stat2.st_mode)) { // S_IFWHT(stat2.st_mode)
 //mx_printstr( " <f> " );
                 acl[0] = 'w';
                 mode = 2;
@@ -93,7 +93,7 @@ char* mx_get_acl(char *filename, char **pararr) {
 //mx_printstr( " <f> " );
         mode = 1;
     }
-    else if ( S_ISWHT(stat1.st_mode) ) { // S_IFWHT(stat1.st_mode)
+    else if ( S_ISWHT(stat1.st_mode)) { // S_IFWHT(stat1.st_mode)
         acl[0] = 'w';
 //mx_printstr( " <f> " );
         mode = 1;

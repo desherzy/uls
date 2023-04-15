@@ -162,9 +162,12 @@ for (int i = 0; (*dirarr)[i] != NULL; i++) {
         mx_print_strarr( *dirarr," | ");
 mx_printstr( " fbs :   " );
         mx_print_strarr( *filearr," | ");*/
-
-        mx_sort_strarr(dirarr);
-        mx_sort_strarr(filearr);
+        if (dirarr != NULL)
+            mx_bubble_sort(*dirarr, dir_cnt);
+        //mx_sort_strarr(dirarr);
+        if (filearr != NULL)
+            mx_bubble_sort(*filearr, file_cnt);
+        //mx_sort_strarr(filearr);
 
 /*mx_printstr( " das :   " );
         mx_print_strarr( (*dirarr)," | ");

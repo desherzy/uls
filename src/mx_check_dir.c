@@ -62,19 +62,19 @@ int mx_check_dir( char* dirname, char*** dirarr, char*** filearr, int type ) {
         dirnt = readdir( dir );
 
         int dir_i = 0;
-        int file_i = 0;
+        //int file_i = 0;
         while (dirnt != NULL) {
 
             if ( type == 1 ) { // return all names in dirarr 
 
                 
-                if ( dir_i < dir_cnt ) {
+                if (dir_i < dir_cnt) {
                     (*dirarr)[dir_i] = mx_strdup( dirnt->d_name );
                     dir_i++;
                 } 
                 else if (false){
 
-                    file_i++;
+                    //file_i++;
                 }
             }
             else if ( false && type == 2 ) { // 

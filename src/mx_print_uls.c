@@ -15,8 +15,10 @@ int mx_print_uls(char* path, char **pararr, char** namearr, int type) {
 //mx_printstr( "                                 l2   \n" );
 //mx_print_strarr( *dirarr," | ");
         char *fullfilename = NULL;
-        int sizelen = 1;
-        int linklen = 1;
+        int sizelen = 0;
+        int linklen = 0;
+        int userlen = 0;
+        int grouplen = 0;
         struct stat stat1;
         { // find total and size col len
             int total = 0;
@@ -45,11 +47,20 @@ int mx_print_uls(char* path, char **pararr, char** namearr, int type) {
                 int slen = mx_strlen(mx_itoa(stat1.st_size));
                 if (slen > sizelen) {
                     sizelen = slen;
-                }
-
+                } 
                 int llen = mx_strlen(mx_itoa(stat1.st_nlink));
                 if (llen > linklen) {
                     linklen = llen;
+                }
+                struct passwd* pwu2 = getpwuid(stat1.st_uid);
+                int ulen = mx_strlen(pwu2->pw_name);
+                if (ulen > userlen) {
+                    userlen = ulen;
+                }
+                struct group* grp2 = getgrgid(stat1.st_gid);
+                int glen = mx_strlen(grp2->gr_name);
+                if (glen > grouplen) {
+                    grouplen = glen;
                 }
             }
 
@@ -100,6 +111,12 @@ mx_printstr( namearr[i] );*/
             //mx_printstr( " " );
             //struct stat stat1;
             lstat( fullfilename, &stat1 ); // path + '/' + namearr[i]
+
+            mx_printstr("           file ctime:   ");
+            mx_printstr( ctime(&stat1.st_mtime) );
+            mx_printstr("\n");
+
+//mx_printstr("\n");
 //mx_printstr( "                                 l5   \n" );
 
             mx_printstr(" ");
@@ -112,12 +129,24 @@ mx_printstr( namearr[i] );*/
                 mx_printstr(mx_itoa(stat1.st_nlink));
             } // print (links?)
             mx_printstr(" ");
-            struct passwd* pwu = getpwuid(stat1.st_uid);
-            mx_printstr(pwu->pw_name);
+            {
+                struct passwd* pwu = getpwuid(stat1.st_uid);
+                mx_printstr(pwu->pw_name);
+
+                for (int j = 0; userlen > j + mx_strlen(pwu->pw_name); j++) { // space
+                    mx_printstr(" ");
+                }
+            }
             mx_printstr(" ");
             mx_printstr(" ");
-            struct group* grp = getgrgid(stat1.st_gid);
-            mx_printstr(grp->gr_name);
+            {
+                struct group* grp = getgrgid(stat1.st_gid);
+                mx_printstr(grp->gr_name);
+
+                for (int j = 0; grouplen > j + mx_strlen(grp->gr_name); j++) { // space
+                    mx_printstr(" ");
+                }
+            }
             mx_printstr(" ");
             mx_printstr(" ");
             {

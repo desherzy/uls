@@ -5,16 +5,17 @@ int mx_print_multicolumn(char** printarr, char** pararr) {
 
 //mx_printstr("\n print  mco  \n");
     // space between cols 
-    char* space = " ";
-    int space_len = 3; // without \0 
+    char* space = "\t";
+    //int space_len = 8; // without \0 
     int widht = 0;
     { // get terminal cols 
         struct winsize ws;
         ioctl(0, TIOCGWINSZ, &ws);
         widht = ws.ws_col;
     }
-    //mx_printstr("\nwidht: ");
-    //mx_printint(widht);
+mx_printstr("\nwidht: ");
+mx_printint(widht);
+mx_printstr("| ");
 
     int print_cnt = 0;
     for ( ; printarr != NULL && printarr[print_cnt] != NULL; ) { 
@@ -34,46 +35,76 @@ mx_printstr("\n print_cnt         ");
 mx_printint(print_cnt);*/
 
     int rows = 1; // rows count
+    int max_col_len = 0;
     { // find count of rows 
-        
+        for (int ni = 0; printarr != NULL && printarr[ni] != NULL; ni++) { 
+            
+            if ( mx_strlen(printarr[ni]) + (8 - mx_strlen(printarr[ni]) % 8) > max_col_len ) {
+
+                max_col_len = mx_strlen(printarr[ni]) + (8 - mx_strlen(printarr[ni]) % 8);
+            }
+        }
+mx_printstr("\n max_col_len         ");
+mx_printint(max_col_len);
+mx_printstr(" \n");
+
         for ( ; rows <= print_cnt ; rows++) {
             
-            int row_len = 0;
-            int cols_i = 0;
-            for (; cols_i < print_cnt ;) { // foreach col // find all rows lens
-
-                int col_len = 0;
-//mx_printstr(" 045-3 ");
-                for (int row = 0; row < rows && (cols_i*rows + row) < print_cnt; row++) { // find max col len 
-
-                    /*for (int stri = 0; printarr[ cols_i  ] != NULL; stri++) {
-                        
-                    }*/ //
-//mx_printstr(" 045-31 ");
-                    if (mx_strlen(printarr[(cols_i*rows + row)]) > col_len) { // (col * 4) + (row)
-/*mx_printstr(" true ");
-mx_printstr(printarr[ (cols_i*rows + row) ]);
-mx_printstr("\n");*/
-                        col_len = mx_strlen(printarr[(cols_i*rows + row)]);
-                    }
-                }
-/*mx_printstr(" 045-4 ");*/
-
-                row_len += col_len;
-                if (cols_i + 1 < print_cnt)
-                    row_len += space_len;
-
-                cols_i++;
+            int max_row_len = print_cnt / rows;
+            if ( print_cnt % rows > 0) {
+                max_row_len += 1;
             }
+            max_row_len *= max_col_len;
 
-            //mx_printstr("\nrow_len: ");
-            //mx_printint(row_len);
+            /*for (int ri = 0; ri < rows; ri++) { // foreach row
 
-            if (row_len <= widht) { // if row len <= terminal len
+                int ri_cols = print_cnt / rows;
+                if ( print_cnt % rows > ri) {
+                    ri_cols += 1;
+                }
+                for (; cols_i < ri_cols ; cols_i++) { // foreach col
+
+                    int col_len = 0;
+    //mx_printstr(" 045-3 ");
+                    for (int row = 0; row < rows && (cols_i*rows + row) < print_cnt; row++) { // find max col name len 
+
+
+    //mx_printstr(" 045-31 ");
+                        if (mx_strlen(printarr[(cols_i*rows + row)]) > col_len) { // (col * 4) + (row)
+
+                            col_len = mx_strlen(printarr[(cols_i*rows + row)]);
+                        }
+                    }
+
+                    row_len += col_len;
+                    // 
+                    if (cols_i + 1 < ri_cols) {
+
+                        row_len += 8 - row_len % 8;
+                    }
+                    // int wtab = 8 - row_len % 8;
+                    // if ( row_len % 8 == 0) {
+
+                    //     row_len += space_len;
+                    // }
+                }
+                if (row_len > max_row_len) {
+                    max_row_len = row_len;
+                    row_len = 0;
+                }
+            }*/
+mx_printstr("\nrows: ");
+mx_printint(rows);
+mx_printstr("      row_len: ");
+mx_printint(max_row_len);
+mx_printstr("|\n");
+
+
+            if (max_row_len <= widht) { // if row len <= terminal len
                 break;
             }
             else {
-                row_len = 0;
+                max_row_len = 0;
             }
         }
     }
@@ -86,19 +117,15 @@ mx_printstr("\n");*/
         for (; rows_i < rows; rows_i++) { // foreach row
             
             //int row_len = 0;
-            int cols_i = 0;
-            for ( ; cols_i*rows + rows_i < print_cnt ; ) { // foreach col
+            for (int cols_i = 0; cols_i*rows + rows_i < print_cnt ; cols_i++) { // foreach col
 
-                int col_len = 0;
+                /*int col_len = 0;
                 for ( int row = 0; row < rows && (cols_i*rows + row) < print_cnt ; row++) { // find max col len 
 
-                    /*for (int stri = 0; printarr[ cols_i  ] != NULL; stri++) {
-                        
-                    }*/ //
                     if ( mx_strlen( printarr[ (cols_i*rows + row) ] ) > col_len ) { // (col * 4) + (row)
                         col_len = mx_strlen( printarr[ (cols_i*rows + row) ] );
                     }
-                }
+                }*/
                 //row_len += col_len;
                 //row_len += space_len - 1;
                 { // print 
@@ -106,7 +133,8 @@ mx_printstr("\n");*/
                     //mx_printint(  (cols_i*rows + rows_i)  );
 
                     if ((cols_i + 1) * rows + rows_i < print_cnt) {
-                        for (int j = ( /*col_len -*/ mx_strlen(printarr[ (cols_i*rows + rows_i) ]) ); j < (col_len + space_len); j++) {
+                        //for (int j = ( /*col_len -*/ mx_strlen(printarr[ (cols_i*rows + rows_i) ]) ); j < (col_len + (8 - col_len % 8)); j+=(8 - j % 8)) {
+                        for (int j = ( /*col_len -*/ mx_strlen(printarr[ (cols_i*rows + rows_i) ]) ); j < max_col_len; j+=(8 - j % 8)) {
                             mx_printstr( space );
                         }
                     }
@@ -114,7 +142,6 @@ mx_printstr("\n");*/
                         
                     }
                 }
-                cols_i++;
             }
             mx_printstr("\n");
         }
@@ -122,9 +149,11 @@ mx_printstr("\n");*/
     { // clear 
        // free( intarr );
     }
-mx_printstr("\n ");
+//mx_printstr("\n ");
     // printarr cleaned in main
     return 0;
 }
+
+
 
 
