@@ -2,18 +2,7 @@
 #include "../inc/uls.h"
 
 int mx_print_uls(char* path, char **pararr, char** namearr, int type) {
-
-    //pararr = NULL;
-    //namearr = NULL;
-    //dirname = NULL;
-    //type = 1;
-
-//mx_printstr( "                                 l1   \n" );
     if (mx_check_par(pararr, 'l')) {
-
-//mx_printstr( " \nprint l :   \n" );
-//mx_printstr( "                                 l2   \n" );
-//mx_print_strarr( *dirarr," | ");
         char *fullfilename = NULL;
         int sizelen = 0;
         int linklen = 0;
@@ -22,7 +11,7 @@ int mx_print_uls(char* path, char **pararr, char** namearr, int type) {
         struct stat stat1;
         { // find total and size col len
             int total = 0;
-            for (int i = 0; namearr[i] != NULL; i++) { // foreach in names
+            for (int i = 0; namearr[i] != NULL; i++) { 
                 { // find full name
                     int s = mx_strlen(path);
                     fullfilename = mx_strnew(s + mx_strlen(namearr[i]) + 1);
@@ -32,23 +21,23 @@ int mx_print_uls(char* path, char **pararr, char** namearr, int type) {
                         s++;
                     }
                     int j = 0;
-                    for ( ; namearr[i][j] != '\0' ; s++) {
+                    for (; namearr[i][j] != '\0' ; s++) {
                         fullfilename[s] = namearr[i][j];
                         j++;
                     }
                 }
-//mx_printstr( " full file       ");
-//mx_printstr( fullfilename);
-//mx_printstr( "  ");
-                lstat(fullfilename, &stat1); // path + '/' + namearr[i]
+
+                lstat(fullfilename, &stat1); 
 
                 total += stat1.st_blocks;
 
-                int slen = mx_strlen(mx_itoa(stat1.st_size));
+                char * itoa1 = mx_itoa(stat1.st_size);
+                int slen = mx_strlen(itoa1);
                 if (slen > sizelen) {
                     sizelen = slen;
                 } 
-                int llen = mx_strlen(mx_itoa(stat1.st_nlink));
+                char * itoa2 = mx_itoa(stat1.st_nlink);
+                int llen = mx_strlen(itoa2);
                 if (llen > linklen) {
                     linklen = llen;
                 }
@@ -62,21 +51,23 @@ int mx_print_uls(char* path, char **pararr, char** namearr, int type) {
                 if (glen > grouplen) {
                     grouplen = glen;
                 }
+                { // clear 
+                    mx_strdel(&itoa1);
+                    mx_strdel(&itoa2);
+                    mx_strdel(&fullfilename);
+                }
             }
 
             if (type == 1) {
+                char * itoa1 = mx_itoa(total);
+
                 mx_printstr("total ");
-                mx_printstr(mx_itoa(total));
+                mx_printstr(itoa1);
                 mx_printstr("\n");
+
+                mx_strdel(&itoa1);
             }
-
-            //mx_printstr( mx_itoa(total/2) ); // linux ====================================================================================
-            //mx_printstr( "\n" );
         }
-//mx_printstr( "                                 l4   \n" );
-        char** linearr = NULL;
-        const int cnt = 10;
-
         for (int i = 0; namearr[i] != NULL; i++) { // foreach in names
             {
                 int s = mx_strlen(path);
@@ -87,46 +78,23 @@ int mx_print_uls(char* path, char **pararr, char** namearr, int type) {
                     s++;
                 }
                 int j = 0;
-                for ( ; namearr[i][j] != '\0' ; s++) {
+                for (; namearr[i][j] != '\0' ; s++) {
                     fullfilename[s] = namearr[i][j];
                     j++;
                 }
             }
-/*mx_printstr( namearr[i] );
-mx_printstr( "\n" );
-mx_printstr( "                                 l4-1   \n" );*/
-/*mx_printstr( "  stat   " );
-mx_printstr( namearr[i] );*/
 
-            stat(fullfilename, &stat1); // path + '/' + namearr[i]
-            linearr = (char**)malloc( sizeof(char*) * (cnt + 1) );
-            linearr[cnt] = NULL;
-            for (int i = 0; linearr[i] != NULL; i++) { // set NULL
-                linearr[i] = NULL;
-            } // ?
-//mx_printstr( "                                 l4-2   \n" );
-
-            mx_printstr( mx_get_acl( fullfilename, pararr ) );
-//mx_printstr( "                                 l4-3   \n" );
-            //mx_printstr( " " );
-            //struct stat stat1;
-            lstat( fullfilename, &stat1 ); // path + '/' + namearr[i]
-
-            mx_printstr("           file ctime:   ");
-            mx_printstr( ctime(&stat1.st_mtime) );
-            mx_printstr("\n");
-
-//mx_printstr("\n");
-//mx_printstr( "                                 l5   \n" );
+            char *aclstr = mx_get_acl(fullfilename, pararr);
+            mx_printstr(aclstr);
+            lstat(fullfilename, &stat1); // path + '/' + namearr[i]
 
             mx_printstr(" ");
+            char *nlinkstr = mx_itoa(stat1.st_nlink);
             {
-                char *nlink = mx_itoa(stat1.st_nlink);
-                for (int j = 0; linklen > j + mx_strlen(nlink); j++) { // space
+                for (int j = 0; linklen > j + mx_strlen(nlinkstr); j++) { // space
                     mx_printstr(" ");
                 }
-                
-                mx_printstr(mx_itoa(stat1.st_nlink));
+                mx_printstr(nlinkstr);
             } // print (links?)
             mx_printstr(" ");
             {
@@ -149,55 +117,52 @@ mx_printstr( namearr[i] );*/
             }
             mx_printstr(" ");
             mx_printstr(" ");
+            char *sizestr = mx_itoa(stat1.st_size);
             {
-                char *size = mx_itoa(stat1.st_size);
-                for (int j = 0; sizelen > j + mx_strlen( size ); j++) { // space
+                for (int j = 0; sizelen > j + mx_strlen( sizestr ); j++) { // space
                     mx_printstr(" ");
                 }
-                mx_printstr(mx_itoa(stat1.st_size));
+                mx_printstr(sizestr);
             } // print size
             mx_printstr(" ");
-            mx_printstr(mx_get_date(stat1.st_mtime));
+            char * datestr = mx_get_date(stat1.st_mtime);
+            mx_printstr(datestr);
             mx_printstr(" ");
             mx_printstr(namearr[i]);
 
-            size_t link_size = stat1.st_size + 1;
+            size_t link_size = stat1.st_size;
             if (stat1.st_size == 0) {
                 link_size = _PC_PATH_MAX;
             }
-
-            char *link_buf = malloc(link_size);
+            char *link_buf = mx_strnew(link_size);
             
             if (readlink(fullfilename, link_buf, link_size) != -1) { //if link
                 mx_printstr(" -> ");
                 mx_printstr(link_buf);
             }
-
             mx_printstr("\n");
+            { // clear 
+                mx_strdel(&aclstr);
+                mx_strdel(&nlinkstr);
+                mx_strdel(&datestr);
+                mx_strdel(&sizestr);
+                mx_strdel(&link_buf);
+                mx_strdel(&fullfilename);
+            }
         }    
     }
-    if ( !mx_check_par(pararr, 'l') ) {
-
-//mx_printstr("\n print uls !l    \n");
-
-        if (isatty(1) == 1 || true) {
-
+    else if (!mx_check_par(pararr, 'l')) {
+        if (isatty(1) == 1) {
             mx_print_multicolumn(namearr, pararr);
         }
         else if (isatty(1) == 0) {
-
-//mx_printstr("\n print  tty  \n");
-            for (int i = 0; namearr[i] != NULL; i++) { // foreach in names
-
-                mx_printstr( namearr[i] );
+            for (int i = 0; namearr[i] != NULL; i++) {
+                mx_printstr(namearr[i]);
                 mx_printstr("\n");
             }
         }
     }
-    { // clear 
 
-    }
     return 0;
 }
-
 
