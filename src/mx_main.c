@@ -20,9 +20,9 @@ int main(int argc, char const *argv[]) {
     }
     if (argarr == NULL) { // if argarr != NULL
         char **dirarr = NULL;
-        if (mx_check_dir( "./", &dirarr, NULL, 1 ) != -1) { 
+        if (mx_check_dir("./", &dirarr, NULL, 1) != -1) { 
             mx_check_name(&dirarr, pararr);
-                mx_print_uls( "", pararr, dirarr, 1);
+                mx_print_uls("", pararr, dirarr, 1);
         }
 
         { // clear
@@ -32,7 +32,7 @@ int main(int argc, char const *argv[]) {
             }
         }
     }
-    else if ( argarr != NULL ) { 
+    else if (argarr != NULL) { 
         // dirs names array
         char **dirarr = NULL;
         // files names array
@@ -60,7 +60,7 @@ int main(int argc, char const *argv[]) {
                         mx_printstr(":\n");
                     }
                 
-                    mx_print_uls(dirarr[i], pararr, dirarr2, 2);
+                    mx_print_uls(dirarr[i], pararr, dirarr2, 1);
                 }
                 { // clear
                     if (dirarr2 != NULL) {
